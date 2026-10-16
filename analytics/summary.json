@@ -1,0 +1,17 @@
+{
+    "totalReports": 7,
+    "severityCounts": {
+        "High": 5,
+        "Medium": 2
+    },
+    "statusCounts": {
+        "Pending": 5,
+        "Repaired": 2
+    },
+    "repeatedLocations": [
+        {
+            "address": "Cheeriyal, Keesara mandal",
+            "reportCount": 2
+        }
+    ]
+}

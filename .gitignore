@@ -1,0 +1,40 @@
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+server/.env
+client/.env
+client/.env.*
+!client/.env.example
+
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build output
+client/dist/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Generated Hadoop output
+hadoop/output/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Live data exported from MongoDB
+hadoop/input/pothole_reports.csv

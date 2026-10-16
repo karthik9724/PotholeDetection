@@ -1,0 +1,8 @@
+id,title,severity,status,address,latitude,longitude
+1,pothole3,High,Pending,"Cheeriyal, Keesara mandal",17.5214636,78.6310566
+2,Pothole_2,High,Pending,"Cheeriyal, Keesara mandal",17.5214297,78.6310325
+3,Pothole_2,Medium,Pending,"Near Akshaya boys hostel, Cheeriyal",,
+4,Pothole,High,Pending,"Bus Stand, Cheeriyal",,
+5,Pothole,Medium,Repaired,"Market, Hyderabad",,
+6,Large pothole near Bus Stand,High,Repaired,"Near Akshaya boys hostel, Hyderabad",,
+7,Road pothole near college,High,Pending,"Near college gate",17.385,78.4867
