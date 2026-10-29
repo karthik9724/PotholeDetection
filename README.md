@@ -314,7 +314,3 @@ The exact Hadoop command depends on the installed Hadoop version, the Streaming 
 B.Tech – Computer Science and Engineering
 
 GitHub: [karthik9724](https://github.com/karthik9724)
-
-## 📄 License
-
-This project does not currently specify a license. Add a license file if you want to define the terms under which others may use, modify, and distribute the code.
