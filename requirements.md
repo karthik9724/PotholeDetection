@@ -1,172 +1,183 @@
-# Pothole Detection and Road Maintenance System Using Cloud Computing and Big Data Analytics
+# RoadCare — System Requirements
 
-## 1. Project Overview
+## 1. Purpose
 
-The Pothole Detection and Road Maintenance System is a web-based application that allows citizens to report potholes and helps road maintenance officers manage repair activities.
+This document defines the functional requirements, non-functional requirements, software dependencies, and external service requirements for the RoadCare Pothole Detection and Road Maintenance System.
 
-The system stores pothole reports and images, tracks repair status, and uses Hadoop MapReduce to analyze pothole reports by location.
+The system supports pothole reporting, report management, cloud image storage, and location-based analysis of report data using Hadoop MapReduce.
 
-## 2. Project Objectives
+## 2. Functional Requirements
 
-- Allow citizens to submit pothole reports with descriptions, images, and locations.
-- Store report information in MongoDB Atlas.
-- Store uploaded pothole images in Amazon S3.
-- Allow officers to update repair status.
-- Display summary statistics and location-based analytics.
-- Use Hadoop MapReduce to identify locations with repeated pothole reports.
-- Provide a dashboard to monitor reports and repair progress.
+### FR-01: Pothole Report Submission
 
-## 3. Technologies and Tools Used
+The system shall provide an interface for users to submit pothole reports with the details supported by the application, such as a title, description, and location.
 
-### Frontend
-- React.js
-- Vite
-- JavaScript / JSX
-- HTML and CSS
-- Recharts for charts and data visualization
+### FR-02: Report Storage
 
-### Backend
-- Node.js
-- Express.js
-- REST API
-- MongoDB Node.js driver
+The system shall store pothole report information in MongoDB and make stored reports available through the implemented API.
 
-### Database
-- MongoDB Atlas — cloud database for pothole reports and application data.
+### FR-03: Image Upload
 
-### Cloud Storage
-- Amazon Web Services (AWS) S3 — storage for uploaded pothole images.
+The system shall support uploading pothole images to a configured Amazon S3 bucket, subject to the application's upload implementation and AWS permissions.
 
-### Big Data Analytics
-- Apache Hadoop 3.4.2
-- Hadoop Streaming
-- Python 3
-- Python CSV module
-- MapReduce programming model
+### FR-04: Report Retrieval
 
-### Development Tools
-- Visual Studio Code
-- Git
-- GitHub
-- Windows and WSL Ubuntu
-- npm for Node.js package management
+The system shall allow users with the appropriate access to retrieve and view available pothole reports.
 
-## 4. System Architecture
+### FR-05: Repair Status Management
 
-1. Citizens submit pothole reports through the React frontend.
-2. The Express backend validates requests and processes report data.
-3. Report information is stored in MongoDB Atlas.
-4. Pothole images are uploaded to Amazon S3.
-5. An export script retrieves reports from MongoDB and writes them to a CSV file.
-6. Hadoop Streaming executes a Python mapper and reducer to count reports by location.
-7. The Express analytics API returns report summaries and Hadoop results.
-8. The frontend dashboard displays report statistics, severity information, and location-based analytics.
+The system shall support updating the repair status of a report through the implemented report-management workflow.
 
-## 5. Main Functional Modules
+### FR-06: Data Export
 
-### Citizen Reporting
-- Submit pothole details.
-- Include a description and location.
-- Upload an image.
-- Save the report in the database.
+The system shall provide a mechanism to export report data from MongoDB into CSV format for further processing.
 
-### Officer Repair Management
-- View pothole reports.
-- Update repair status.
-- Track pending and completed repairs.
+### FR-07: Big Data Processing
 
-### Cloud Image Storage
-- Upload images to Amazon S3.
-- Retrieve stored images when displaying reports.
+The system shall support processing CSV report data using Hadoop Streaming and Python mapper and reducer scripts.
 
-### Analytics Dashboard
-- Display total reports.
-- Show pending and repaired counts.
-- Summarize reports by severity.
-- Display location-wise pothole counts from Hadoop output.
+### FR-08: Location-wise Analysis
 
-### Big Data Processing
-- Export database records to CSV.
-- Process records using Hadoop Streaming.
-- Use a Python mapper to emit location and count pairs.
-- Use a Python reducer to aggregate counts by exact address.
-- Save results to the Hadoop output directory.
+The analytics workflow shall calculate the number of pothole reports for each location based on the input data and the implemented MapReduce logic.
 
-## 6. Project Folder Structure
+### FR-09: Web Interface
 
-- `client/` — React frontend.
-- `server/` — Express backend and API routes.
-- `server/src/config/` — database and configuration code.
-- `server/src/routes/` — API route handlers.
-- `scripts/export_reports.js` — exports MongoDB reports to CSV.
-- `hadoop/input/` — CSV input for Hadoop.
-- `hadoop/mapper/` — Python mapper.
-- `hadoop/reducer/` — Python reducer.
-- `hadoop/output/` — generated Hadoop output; excluded from Git.
-- `sample-data/` — sample dataset.
-- `analytics/` — analytics-related resources.
-- `docs/` — project documentation.
+The system shall provide a browser-based interface for interacting with the available reporting and report-management features.
 
-## 7. Setup Requirements
+## 3. Non-Functional Requirements
 
-Install or configure the following:
+### NFR-01: Usability
 
-- Node.js and npm.
-- MongoDB Atlas account and database.
-- AWS account with an S3 bucket and appropriate permissions.
-- Python 3.
-- Apache Hadoop 3.4.2 and Java compatible with the Hadoop setup.
-- Git and Visual Studio Code.
+The user interface should be clear and straightforward so that users can submit and review pothole reports without unnecessary complexity.
 
-## 8. Environment Configuration
+### NFR-02: Reliability
 
-The backend uses a local `.env` file for configuration, including database connection details and AWS settings.
+The application should handle database, API, cloud-storage, and data-processing errors appropriately and provide useful error information where implemented.
 
-**Security:** Never commit `.env` files, passwords, database connection strings, AWS access keys, or secret keys to GitHub.
+### NFR-03: Security
 
-Configure the required environment variables on the deployment platform. Keep only safe placeholder values in any example environment file.
+- Sensitive credentials shall be kept out of source control.
+- Database and cloud-storage access shall use appropriate permissions.
+- Protected operations shall enforce the authentication and authorization controls implemented by the application.
+- User inputs and uploaded files should be validated.
 
-## 9. Running the Application Locally
+### NFR-04: Maintainability
 
-1. Install frontend dependencies inside `client/`.
-2. Install backend dependencies inside `server/`.
-3. Configure the backend `.env` file.
-4. Start the Express backend.
-5. Start the React development server.
-6. Open the frontend in a browser and test report submission and analytics.
+Frontend code, backend code, configuration, data-export scripts, and Hadoop processing scripts should remain organized into separate modules.
 
-## 10. Running Big Data Analytics
+### NFR-05: Scalability
 
-1. Export the latest reports from MongoDB using `scripts/export_reports.js`.
-2. Verify the generated `hadoop/input/pothole_reports.csv`.
-3. Run the Hadoop Streaming job with the Python mapper and reducer.
-4. Inspect `hadoop/output/live_location_counts/part-00000`.
-5. Request the Express analytics API to verify that the latest Hadoop results are available.
+The use of MongoDB Atlas, Amazon S3, and Hadoop MapReduce provides components that can support growth in stored reports, images, and analytics workloads when configured and resourced appropriately.
 
-## 11. Testing and Verification
+### NFR-06: Portability
 
-The following workflows have been tested locally:
+The web application should run in compatible Node.js environments. The Hadoop analytics workflow requires a compatible Hadoop and Python environment.
 
-- Citizen report submission.
-- Persistence of reports in MongoDB.
-- Image storage and retrieval using Amazon S3.
-- Officer repair-status updates.
-- Analytics dashboard updates.
-- Validation of invalid report submissions.
-- Persistence after browser refresh and backend restart.
-- CSV export from MongoDB.
-- Hadoop location-wise aggregation.
-- Successful analytics API response with HTTP 200.
+### NFR-07: Data Integrity
 
-## 12. Deployment Plan
+Report records and exported CSV data should preserve the fields and formats required by the application and analytics scripts.
 
-- Push source code to GitHub without credentials or generated files.
-- Deploy the backend to a Node.js-compatible hosting service.
-- Configure environment variables and cloud service permissions.
-- Deploy the frontend to a static hosting service.
-- Configure the frontend API URL to use the deployed backend.
-- Test the complete application using the deployed URLs.
+## 4. Software Requirements
 
-## 13. Expected Outcome
+| Software / Service | Purpose |
+|---|---|
+| Windows | Primary development environment |
+| WSL Ubuntu | Linux environment for Hadoop execution |
+| Node.js | Backend runtime and JavaScript execution |
+| npm | Installing JavaScript dependencies |
+| React.js | Frontend interface |
+| Vite | Frontend development and build tooling |
+| Express.js | Backend REST API |
+| MongoDB Atlas | Cloud database for report information |
+| AWS S3 | Cloud storage for uploaded images |
+| Python 3 | Hadoop mapper and reducer scripts |
+| Apache Hadoop 3.4.2 | Big Data processing |
+| Hadoop Streaming | Running Python scripts as MapReduce tasks |
+| Git | Source-code version control |
+| GitHub | Source-code hosting and collaboration |
+| Visual Studio Code | Code editing and development |
 
-The system provides a centralized way to report potholes, manage repair progress, store images in cloud storage, and analyze frequently reported locations using big data processing.
+Use compatible versions of the listed tools and verify the versions required by the project's package files and configuration.
+
+## 5. External Service Requirements
+
+### 5.1 MongoDB Atlas
+
+- A MongoDB Atlas deployment must be available.
+- A database connection string must be configured securely.
+- The application must have permission to access the required database and collections.
+- Network access must be configured to permit the application to connect.
+
+### 5.2 Amazon S3
+
+- An S3 bucket must exist in the configured AWS region.
+- The backend must be configured with the correct bucket and region.
+- AWS permissions must allow only the required image-storage operations.
+- AWS credentials must be stored securely and must not be committed to the repository.
+
+### 5.3 Hadoop Environment
+
+- A compatible Hadoop installation must be available for analytics execution.
+- Hadoop Streaming must be accessible.
+- Python 3 must be installed in the execution environment.
+- The mapper, reducer, and input CSV must be available at the configured paths.
+- Each Hadoop run must use an output directory that does not already exist.
+
+## 6. Data Requirements
+
+### Input Data
+
+The analytics workflow uses pothole report records exported to CSV format.
+
+The expected local input file is:
+
+```text
+hadoop/input/pothole_reports.csv
+```
+
+The CSV must contain the fields expected by the export script, mapper, and reducer. The exact schema should be maintained consistently across these components.
+
+### Output Data
+
+The Hadoop workflow generates output containing location-wise report counts according to the implemented mapper and reducer logic.
+
+Generated Hadoop output should be treated as derived data and should not be committed unless there is a specific reason to version a sample result.
+
+## 7. Environment Configuration
+
+The application requires configuration for the services it uses. Depending on the implementation, this may include:
+
+- MongoDB connection settings.
+- Authentication and token settings.
+- AWS region and S3 bucket settings.
+- AWS credentials or an alternative supported AWS credential provider.
+- Frontend API base URL.
+
+Use the exact environment variable names defined in the source code. Store local secrets in ignored environment files and provide only placeholder values in any example configuration file committed to GitHub.
+
+## 8. Constraints and Assumptions
+
+- Cloud features depend on valid service configuration, permissions, and network connectivity.
+- Image upload requires a functioning S3 configuration.
+- Database export requires access to the configured MongoDB database.
+- Analytics results depend on the completeness and correctness of the input CSV.
+- Location-wise counts reflect the location values in the source data; inconsistent location names may produce separate counts.
+- Hadoop processing performance depends on the dataset size and the available computing resources.
+- The available functionality is limited to features implemented in the current application.
+
+## 9. Acceptance Criteria
+
+The system can be considered functionally validated when the following applicable checks succeed:
+
+1. The frontend can communicate with the backend.
+2. A valid pothole report can be submitted and retrieved.
+3. Report information is persisted in MongoDB.
+4. Image upload works when AWS S3 is configured.
+5. Report status can be updated through the implemented workflow.
+6. Report data can be exported to CSV.
+7. Hadoop Streaming can execute the mapper and reducer on valid input data.
+8. The generated output contains the expected location-wise report counts.
+
+## 10. Maintenance
+
+This document should be updated whenever the project's features, APIs, data schema, technology stack, environment variables, or external service requirements change.
